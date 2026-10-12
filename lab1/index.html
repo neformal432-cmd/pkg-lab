@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Конвертер цветовых моделей</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Конвертер цветовых моделей</h1>
+      <p class="subtitle">RGB ↔ LAB ↔ CMYK</p>
+    </header>
+
+    <section class="settings-panel">
+      <select id="illuminant-select" title="Источник белого цвета для пересчёта LAB">
+        <option value="D65" selected>D65 — дневной свет</option>
+        <option value="D50">D50 — полиграфия</option>
+        <option value="E">E — равноэнергетический</option>
+      </select>
+      <select id="cmyk-method" title="Способ формирования чёрного канала">
+        <option value="GCR" selected>GCR — полная замена серого чёрным</option>
+        <option value="UCR">UCR — чёрный только в тенях</option>
+      </select>
+      <select id="oog-strategy" title="Что делать, если цвет выходит за пределы RGB">
+        <option value="clipping" selected>Clipping — обрезка по границам 0–255</option>
+        <option value="scaling">Scaling — пропорциональное сжатие диапазона</option>
+      </select>
+      <button id="run-tests">Тесты</button>
+    </section>
+
+    <div id="warning-box" class="warning-box hidden"></div>
+
+    <section class="color-preview">
+      <input type="color" id="rgb-picker" value="#ff0000">
+      <div id="main-swatch">
+        <span id="hex-display">#FF0000</span>
+      </div>
+    </section>
+
+    <section class="models-row">
+      <section class="model-card" id="rgb-card">
+        <h2>RGB</h2>
+        <div class="sliders">
+          <div class="slider-row"><label>R</label><input type="range" id="slider-r" min="0" max="255" value="255"><input type="number" id="input-r" min="0" max="255" value="255"></div>
+          <div class="slider-row"><label>G</label><input type="range" id="slider-g" min="0" max="255" value="0"><input type="number" id="input-g" min="0" max="255" value="0"></div>
+          <div class="slider-row"><label>B</label><input type="range" id="slider-b" min="0" max="255" value="0"><input type="number" id="input-b" min="0" max="255" value="0"></div>
+        </div>
+      </section>
+
+      <section class="model-card" id="lab-card">
+        <h2>LAB</h2>
+        <div class="sliders">
+          <div class="slider-row"><label>L</label><input type="range" id="slider-l" min="0" max="100" step="0.1" value="53.24"><input type="number" id="input-l" min="0" max="100" step="0.1" value="53.24"></div>
+          <div class="slider-row"><label>a</label><input type="range" id="slider-a" min="-128" max="127" step="0.1" value="80.11"><input type="number" id="input-a" min="-128" max="127" step="0.1" value="80.11"></div>
+          <div class="slider-row"><label>b</label><input type="range" id="slider-lab-b" min="-128" max="127" step="0.1" value="67.22"><input type="number" id="input-lab-b" min="-128" max="127" step="0.1" value="67.22"></div>
+        </div>
+      </section>
+
+      <section class="model-card" id="cmyk-card">
+        <h2>CMYK</h2>
+        <div class="sliders">
+          <div class="slider-row"><label>C</label><input type="range" id="slider-c" min="0" max="100" step="0.1" value="0"><input type="number" id="input-c" min="0" max="100" step="0.1" value="0"></div>
+          <div class="slider-row"><label>M</label><input type="range" id="slider-m" min="0" max="100" step="0.1" value="100"><input type="number" id="input-m" min="0" max="100" step="0.1" value="100"></div>
+          <div class="slider-row"><label>Y</label><input type="range" id="slider-y" min="0" max="100" step="0.1" value="100"><input type="number" id="input-y" min="0" max="100" step="0.1" value="100"></div>
+          <div class="slider-row"><label>K</label><input type="range" id="slider-k" min="0" max="100" step="0.1" value="0"><input type="number" id="input-k" min="0" max="100" step="0.1" value="0"></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="test-results" class="test-results hidden">
+      <h3>Результаты тестов</h3>
+      <div id="test-output"></div>
+    </section>
+
+    <footer>
+      <p>Лабораторная работа №1 · Вариант 1</p>
+    </footer>
+  </div>
+
+  <script src="js/model.js"></script>
+  <script src="js/view.js"></script>
+  <script src="js/viewmodel.js"></script>
+  <script src="js/tests.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
